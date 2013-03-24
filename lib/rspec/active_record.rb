@@ -1,29 +1,12 @@
 require 'active_record/fixtures'
+require 'rspec/active_record/adapters'
 
 module RSpec
 	module ActiveRecord
 		module FixtureSupport
+			extend  ::ActiveSupport::Concern
+			include ::RSpec::ActiveRecord::SetupAndTeardownAdapter
 			include ::ActiveRecord::TestFixtures
-			
-			class << self
-				def setup(*methods)
-					methods.each do |method|
-						if method == :setup_fixtures
-							prepend_before { send method }
-						else
-							before         { send method }
-						end
-					end
-				end
-				
-				def teardown(*methods)
-					methods.each { |m| after { send method } }
-				end
-			end
-			
-			def method_name
-				@example
-			end
 			
 			included do
 				self.fixture_path = RSpec.configuration.fixture_path
