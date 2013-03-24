@@ -1,7 +1,9 @@
+require 'active_record/fixtures'
+
 module RSpec
 	module ActiveRecord
 		module FixtureSupport
-			include ActiveRecord::TestFixtures
+			include ::ActiveRecord::TestFixtures
 			
 			included do
 				self.fixture_path = RSpec.configuration.fixture_path
