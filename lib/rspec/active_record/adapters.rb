@@ -5,17 +5,17 @@ module RSpec
 						
 			module ClassMethods
 				def setup(*methods)
-					methods.each do |method|
-						if method == :setup_fixtures
-							prepend_before { send method }
+					methods.each do |m|
+						if m == :setup_fixtures
+							prepend_before { send m }
 						else
-							before         { send method }
+							before         { send m }
 						end
 					end
 				end
 				
 				def teardown(*methods)
-					methods.each { |m| after { send method } }
+					methods.each { |m| after { send m } }
 				end
 			end
 			
