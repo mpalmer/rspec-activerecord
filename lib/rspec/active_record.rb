@@ -5,6 +5,26 @@ module RSpec
 		module FixtureSupport
 			include ::ActiveRecord::TestFixtures
 			
+			class << self
+				def setup(*methods)
+					methods.each do |method|
+						if method == :setup_fixtures
+							prepend_before { send method }
+						else
+							before         { send method }
+						end
+					end
+				end
+				
+				def teardown(*methods)
+					methods.each { |m| after { send method } }
+				end
+			end
+			
+			def method_name
+				@example
+			end
+			
 			included do
 				self.fixture_path = RSpec.configuration.fixture_path
 				self.use_transactional_fixtures = RSpec.configuration.use_transactional_fixtures
