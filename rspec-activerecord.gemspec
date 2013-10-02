@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 	s.require_paths = ["lib"]
 	s.summary = "ActiveRecord-only support for RSpec"
 
-	s.add_runtime_dependency 'activerecord', '~> 3.1'
+	s.add_runtime_dependency 'activerecord', '>= 3.1', '< 5'
 
 	s.add_development_dependency "bundler", "~> 1.0"
 	s.add_development_dependency "rdoc", "~> 2.5"
