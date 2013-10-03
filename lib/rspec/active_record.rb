@@ -9,11 +9,16 @@ module RSpec
 			include ::ActiveRecord::TestFixtures
 			
 			included do
-				self.fixture_path = RSpec.configuration.fixture_path
-				self.use_transactional_fixtures = RSpec.configuration.use_transactional_fixtures
-				self.use_instantiated_fixtures  = RSpec.configuration.use_instantiated_fixtures
-				self.pre_loaded_fixtures        = RSpec.configuration.pre_loaded_fixtures
-				fixtures RSpec.configuration.global_fixtures if RSpec.configuration.global_fixtures
+				%w{fixture_path use_transactional_fixtures
+				   use_instantiated_fixtures pre_loaded_fixtures}.each do |param|
+					self.send("#{param}=".to_sym, RSpec.configuration.send(param.to_sym))
+				end
+				
+				%w{fixture_table_names fixture_class_names global_fixtures}.each do |param|
+					if RSpec.configuration.send(param.to_sym)
+						self.send("#{param}=".to_sym, RSpec.configuration.send(param.to_sym))
+					end
+				end
 			end
 		end
 		
@@ -25,6 +30,8 @@ module RSpec
 			c.add_setting :pre_loaded_fixtures
 			c.add_setting :global_fixtures
 			c.add_setting :fixture_path
+			c.add_setting :fixture_table_names
+			c.add_setting :fixture_class_names
 		end
 	end
 end
