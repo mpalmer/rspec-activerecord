@@ -14,10 +14,14 @@ module RSpec
 					self.send("#{param}=".to_sym, RSpec.configuration.send(param.to_sym))
 				end
 				
-				%w{fixture_table_names fixture_class_names global_fixtures}.each do |param|
+				%w{fixture_table_names fixture_class_names}.each do |param|
 					if RSpec.configuration.send(param.to_sym)
 						self.send("#{param}=".to_sym, RSpec.configuration.send(param.to_sym))
 					end
+				end
+				
+				if RSpec.configuration.global_fixtures
+					fixtures RSpec.configuration.global_fixtures
 				end
 			end
 		end
