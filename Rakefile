@@ -10,12 +10,14 @@ rescue Bundler::BundlerError => e
 	exit e.status_code
 end
 
+require 'git-version-bump/rake-tasks'
+
+Bundler::GemHelper.install_tasks
+
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-	version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
 	rdoc.rdoc_dir = 'rdoc'
-	rdoc.title = "rspec-activerecord #{version}"
+	rdoc.title = "rspec-activerecord #{GVB.version}"
 	rdoc.rdoc_files.include('README*')
 	rdoc.rdoc_files.include('lib/**/*.rb')
 end
