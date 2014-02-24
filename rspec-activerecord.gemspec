@@ -15,7 +15,8 @@ Gem::Specification.new do |s|
 		"LICENCE",
 		"README.md",
 		"lib/rspec-activerecord.rb",
-		"lib/rspec/active_record.rb"
+		"lib/rspec/active_record.rb",
+		"lib/rspec/active_record/adapters.rb"
 	]
 	s.homepage = "https://github.com/mpalmer/rspec-activerecord"
 	s.licenses = ["GPLv3"]
